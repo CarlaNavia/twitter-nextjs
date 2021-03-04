@@ -1,10 +1,29 @@
+import { useEffect, useState } from "react";
 import Head from "next/head";
 import AppLayout from "../components/AppLayout";
 import Button from "../components/Button";
-import Instagram from "../components/Icons/Instagram";
+import Github from "../components/Icons/index";
 import { colors } from "../styles/theme";
+import { loginWithGitHub, onAuthStateChanged } from "../firebase/client";
 
 export default function Home() {
+  const [user, setUser] = useState(undefined);
+
+  useEffect(() => {
+    onAuthStateChanged(setUser);
+  }, []);
+
+  const handleClick = () => {
+    loginWithGitHub()
+      .then((user) => {
+        const { avatar, username, url } = user;
+        setUser(user);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <>
       <Head>
@@ -18,10 +37,19 @@ export default function Home() {
           <h1>Twitter</h1>
           <h2>Talk about development with developers</h2>
           <div>
-            <Button>
-              <Instagram fill='#fff'/>
-              Login with Instagram
-            </Button>
+            {user === null && (
+              <Button onClick={handleClick}>
+                <Github fill="#ffffff" />
+                Login with GitHub
+              </Button>
+            )}
+
+            {user && user.avatar && (
+              <div>
+                <img src={user.avatar} />
+                <strong>{user.username}</strong>
+              </div>
+            )}
           </div>
         </section>
       </AppLayout>
