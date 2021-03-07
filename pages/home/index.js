@@ -1,15 +1,16 @@
 import AppLayout from 'components/AppLayout'
 import Tweet from 'components/Tweet'
+import useUser from 'hooks/useUser'
 import {useEffect, useState} from 'react'
+import {fetchLatestTweets} from 'firebase/client'
 
 export default function HomePage() {
   const [timeline, setTimeline] = useState([])
+  const user = useUser()
 
   useEffect(() => {
-    fetch('/api/statuses/home_timeline')
-      .then(res => res.json())
-      .then(setTimeline)
-  })
+    user && fetchLatestTweets().then(setTimeline)
+  }, [user])
 
   return (
     <>
@@ -18,15 +19,19 @@ export default function HomePage() {
           <h2>Inicio</h2>
         </header>
         <section>
-          {timeline.map(({id, username, avatar, message}) => (
-            <Tweet
-              avatar={avatar}
-              id={id}
-              key={id}
-              message={message}
-              username={username}
-            />
-          ))}
+          {timeline.map(
+            ({createdAt, id, userName, avatar, content, userId}) => (
+              <Tweet
+                avatar={avatar}
+                createdAt={createdAt}
+                id={id}
+                key={id}
+                content={content}
+                userName={userName}
+                userId={userId}
+              />
+            )
+          )}
         </section>
         <nav></nav>
       </AppLayout>
@@ -34,7 +39,9 @@ export default function HomePage() {
       <style jsx>{`
         header {
           align-items: center;
-          border-bottom: 1px solid #ccc;
+          background: #ffffffaa;
+          backdrop-filter: blur(5px);
+          border-bottom: 1px solid #eee;
           display: flex;
           height: 49px;
           position: fixed;
@@ -45,14 +52,12 @@ export default function HomePage() {
         h2 {
           font-size: 21px;
           font-weight: 800px;
-        }
-
-        section {
-          padding-top: 49px;
+          padding-left: 15px;
         }
 
         nav {
-          border-top: 1px solid #ccc;
+          background-color: #fff;
+          border-top: 1px solid #eee;
           bottom: 0;
           height: 49px;
           position: sticky;

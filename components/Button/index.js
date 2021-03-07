@@ -1,10 +1,12 @@
 import {colors} from '../../styles/theme'
 import PropTypes from 'prop-types'
 
-export default function Button({children, onClick}) {
+export default function Button({children, disabled, onClick}) {
   return (
     <>
-      <button onClick={onClick}>{children}</button>
+      <button disabled={disabled} onClick={onClick}>
+        {children}
+      </button>
       <style jsx>{`
         button {
           align-items: center;
@@ -18,6 +20,12 @@ export default function Button({children, onClick}) {
           font-weight: 800px;
           padding: 8px 24px;
           transition: opacity 0.3s ease;
+          user-select: none;
+        }
+
+        button[disabled] {
+          opacity: 0.2;
+          ponter-events: none;
         }
 
         button > :global(svg) {
@@ -34,5 +42,6 @@ export default function Button({children, onClick}) {
 
 Button.propTypes = {
   children: PropTypes.object.isRequired,
+  disabled: PropTypes.bool,
   onClick: PropTypes.func.isRequired
 }

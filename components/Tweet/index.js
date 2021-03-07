@@ -1,22 +1,24 @@
 import Avatar from 'components/Avatar'
 import PropTypes from 'prop-types'
 
-export default function Tweet({avatar, username, message, id}) {
+export default function Tweet({avatar, userName, content, createdAt, id}) {
   return (
     <>
       <article key={id}>
         <div>
-          <Avatar alt={username} src={avatar} />
+          <Avatar alt={userName} src={avatar} />
         </div>
         <section>
-          <strong>{username}</strong>
-          <p>{message}</p>
+          <strong>{userName}</strong>
+          <span> · </span>
+          <date>{createdAt}</date>
+          <p>{content}</p>
         </section>
       </article>
 
       <style jsx>{`
         article {
-          border-bottom: 2px solid lightgrey;
+          border-bottom: 2px solid #eee;
           display: flex;
           padding: 10px 15px;
         }
@@ -29,6 +31,11 @@ export default function Tweet({avatar, username, message, id}) {
           line-height: 1.3125;
           margin: 0;
         }
+
+        date {
+          color: #555;
+          font-size: 14px;
+        }
       `}</style>
     </>
   )
@@ -37,6 +44,7 @@ export default function Tweet({avatar, username, message, id}) {
 Tweet.propTypes = {
   id: PropTypes.string,
   avatar: PropTypes.string,
-  message: PropTypes.string,
-  username: PropTypes.string
+  content: PropTypes.string,
+  userName: PropTypes.string,
+  createdAt: PropTypes.date
 }
