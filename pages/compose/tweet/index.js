@@ -2,6 +2,7 @@ import {useState} from 'react'
 import AppLayout from 'components/AppLayout'
 import Button from 'components/Button'
 import useUser from 'hooks/useUser'
+import Head from 'next/head'
 
 import {addTweet} from 'firebase/client'
 
@@ -49,6 +50,9 @@ export default function ComposeTweet() {
   return (
     <>
       <AppLayout>
+        <Head>
+          <title>Crear un Tweet / Twitter</title>
+        </Head>
         <form onSubmit={handleSubmit}>
           <textarea
             onChange={handleChange}

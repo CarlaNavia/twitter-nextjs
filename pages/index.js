@@ -5,7 +5,7 @@ import {useRouter} from 'next/router'
 
 import AppLayout from 'components/AppLayout'
 import Button from 'components/Button'
-import Github from 'components/Icons/index'
+import Github from 'components/Icons/GitHub'
 
 import {colors} from 'styles/theme'
 
