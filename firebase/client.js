@@ -53,6 +53,7 @@ export const addTweet = ({avatar, content, userId, userName}) => {
 export const fetchLatestTweets = () => {
   return db
     .collection('tweets')
+    .orderBy('createdAt', 'desc')
     .get()
     .then(({docs}) => {
       return docs.map(doc => {
@@ -60,12 +61,7 @@ export const fetchLatestTweets = () => {
         const id = doc.id
         const {createdAt} = data
 
-        const date = new Date(createdAt.seconds * 1000)
-        const normalizedCreatedAt = new Intl.DateTimeFormat('es-ES').format(
-          date
-        )
-
-        return {...data, id, createdAt: normalizedCreatedAt}
+        return {...data, id, createdAt: +createdAt.toDate()}
       })
     })
 }

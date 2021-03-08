@@ -39,8 +39,8 @@ export default function HomePage() {
       <style jsx>{`
         header {
           align-items: center;
-          background: #ffffffaa;
           backdrop-filter: blur(5px);
+          background: #ffffffaa;
           border-bottom: 1px solid #eee;
           display: flex;
           height: 49px;

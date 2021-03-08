@@ -1,7 +1,10 @@
 import Avatar from 'components/Avatar'
 import PropTypes from 'prop-types'
+import useTimeAgo from 'hooks/useTimeAgo'
 
 export default function Tweet({avatar, userName, content, createdAt, id}) {
+  const timeago = useTimeAgo(createdAt)
+
   return (
     <>
       <article key={id}>
@@ -11,7 +14,7 @@ export default function Tweet({avatar, userName, content, createdAt, id}) {
         <section>
           <strong>{userName}</strong>
           <span> · </span>
-          <date>{createdAt}</date>
+          <date>{timeago}</date>
           <p>{content}</p>
         </section>
       </article>
