@@ -1,6 +1,7 @@
 import firebaseApp from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
+import 'firebase/storage'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAtPNZ8MsWUm-Z4FOKxdDWlW88xl3uxIro',
@@ -33,11 +34,13 @@ export const onAuthStateChanged = onChange => {
   })
 }
 
+// Login con GitHub
 export const loginWithGitHub = () => {
   const githubProvider = new firebaseApp.auth.GithubAuthProvider()
   return firebaseApp.auth().signInWithPopup(githubProvider)
 }
 
+// Añadir tweets
 export const addTweet = ({avatar, content, userId, userName}) => {
   return db.collection('tweets').add({
     avatar,
@@ -50,6 +53,7 @@ export const addTweet = ({avatar, content, userId, userName}) => {
   })
 }
 
+// Listar los tweets
 export const fetchLatestTweets = () => {
   return db
     .collection('tweets')
@@ -64,4 +68,12 @@ export const fetchLatestTweets = () => {
         return {...data, id, createdAt: +createdAt.toDate()}
       })
     })
+}
+
+// Subir imagenes
+export const uploadImage = file => {
+  const ref = firebaseApp.storage().ref(`images/${file.name}`)
+  const task = ref.put(file)
+  // Con esta tarea podemos ver la barra de progreso o hacer otras cosas
+  return task
 }
