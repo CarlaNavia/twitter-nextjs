@@ -41,10 +41,11 @@ export const loginWithGitHub = () => {
 }
 
 // Añadir tweets
-export const addTweet = ({avatar, content, userId, userName}) => {
+export const addTweet = ({avatar, content, img, userId, userName}) => {
   return db.collection('tweets').add({
     avatar,
     content,
+    img,
     userId,
     userName,
     createdAt: new Date(),

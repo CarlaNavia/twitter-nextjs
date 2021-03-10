@@ -2,7 +2,7 @@ import Avatar from 'components/Avatar'
 import PropTypes from 'prop-types'
 import useTimeAgo from 'hooks/useTimeAgo'
 
-export default function Tweet({avatar, userName, content, createdAt, id}) {
+export default function Tweet({avatar, img, userName, content, createdAt, id}) {
   const timeago = useTimeAgo(createdAt)
 
   return (
@@ -16,6 +16,7 @@ export default function Tweet({avatar, userName, content, createdAt, id}) {
           <span> · </span>
           <date>{timeago}</date>
           <p>{content}</p>
+          {img && <img src={img} />}
         </section>
       </article>
 
@@ -23,11 +24,19 @@ export default function Tweet({avatar, userName, content, createdAt, id}) {
         article {
           border-bottom: 2px solid #eee;
           display: flex;
+
           padding: 10px 15px;
         }
 
         div {
           padding-right: 10px;
+        }
+
+        img {
+          border-radius: 10px;
+          height: auto;
+          margin-top: 10px;
+          width: 100%;
         }
 
         p {
@@ -49,5 +58,6 @@ Tweet.propTypes = {
   avatar: PropTypes.string,
   content: PropTypes.string,
   userName: PropTypes.string,
+  img: PropTypes.string,
   createdAt: PropTypes.date
 }

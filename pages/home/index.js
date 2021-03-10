@@ -29,11 +29,12 @@ export default function HomePage() {
         </header>
         <section>
           {timeline.map(
-            ({createdAt, id, userName, avatar, content, userId}) => (
+            ({createdAt, id, img, userName, avatar, content, userId}) => (
               <Tweet
                 avatar={avatar}
                 createdAt={createdAt}
                 id={id}
+                img={img}
                 key={id}
                 content={content}
                 userName={userName}
