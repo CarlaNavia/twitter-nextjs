@@ -1,4 +1,3 @@
-import AppLayout from 'components/AppLayout'
 import Tweet from 'components/Tweet'
 import useUser from 'hooks/useUser'
 import {useEffect, useState} from 'react'
@@ -20,47 +19,45 @@ export default function HomePage() {
 
   return (
     <>
-      <AppLayout>
-        <Head>
-          <title>Inicio / Twitter</title>
-        </Head>
-        <header>
-          <h2>Inicio</h2>
-        </header>
-        <section>
-          {timeline.map(
-            ({createdAt, id, img, userName, avatar, content, userId}) => (
-              <Tweet
-                avatar={avatar}
-                createdAt={createdAt}
-                id={id}
-                img={img}
-                key={id}
-                content={content}
-                userName={userName}
-                userId={userId}
-              />
-            )
-          )}
-        </section>
-        <nav>
-          <Link href="/compose/tweet">
-            <a>
-              <Home stroke="#09f" />
-            </a>
-          </Link>
-          <Link href="/compose/tweet">
-            <a>
-              <Search stroke="#09f" />
-            </a>
-          </Link>
-          <Link href="/compose/tweet">
-            <a>
-              <Create stroke="#09f" />
-            </a>
-          </Link>
-        </nav>
-      </AppLayout>
+      <Head>
+        <title>Inicio / Twitter</title>
+      </Head>
+      <header>
+        <h2>Inicio</h2>
+      </header>
+      <section>
+        {timeline.map(
+          ({createdAt, id, img, userName, avatar, content, userId}) => (
+            <Tweet
+              avatar={avatar}
+              createdAt={createdAt}
+              id={id}
+              img={img}
+              key={id}
+              content={content}
+              userName={userName}
+              userId={userId}
+            />
+          )
+        )}
+      </section>
+      <nav>
+        <Link href="/compose/tweet">
+          <a>
+            <Home stroke="#09f" />
+          </a>
+        </Link>
+        <Link href="/compose/tweet">
+          <a>
+            <Search stroke="#09f" />
+          </a>
+        </Link>
+        <Link href="/compose/tweet">
+          <a>
+            <Create stroke="#09f" />
+          </a>
+        </Link>
+      </nav>
 
       <style jsx>{`
         header {
