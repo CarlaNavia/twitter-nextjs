@@ -37,3 +37,6 @@ yarn-error.log*
 package-lock.json
 
 .eslintcache
+
+# firebase keys
+firebase/firebase-keys.json
