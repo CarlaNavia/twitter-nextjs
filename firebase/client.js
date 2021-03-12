@@ -54,22 +54,37 @@ export const addTweet = ({avatar, content, img, userId, userName}) => {
   })
 }
 
-// Listar los tweets
-export const fetchLatestTweets = () => {
+export const mapTweetFromFirebaseToTweetObject = doc => {
+  const data = doc.data()
+  const id = doc.id
+  const {createdAt} = data
+
+  return {...data, id, createdAt: +createdAt.toDate()}
+}
+
+export const listenLatestTweets = callback => {
   return db
     .collection('tweets')
     .orderBy('createdAt', 'desc')
-    .get()
-    .then(({docs}) => {
-      return docs.map(doc => {
-        const data = doc.data()
-        const id = doc.id
-        const {createdAt} = data
-
-        return {...data, id, createdAt: +createdAt.toDate()}
-      })
+    .limit(20)
+    .onSnapshot(({docs}) => {
+      const newTweets = docs.map(mapTweetFromFirebaseToTweetObject)
+      callback(newTweets)
     })
 }
+
+// Listar los tweets
+// export const fetchLatestTweets = () => {
+//   return db
+//     .collection('tweets')
+//     .orderBy('createdAt', 'desc')
+//     .get()
+//     .then(({docs}) => {
+//       return docs.map(doc => {
+//         return mapTweetFromFirebaseToTweetObject(doc)
+//       })
+//     })
+// }
 
 // Subir imagenes
 export const uploadImage = file => {

@@ -1,7 +1,7 @@
 import Tweet from 'components/Tweet'
 import useUser from 'hooks/useUser'
 import {useEffect, useState} from 'react'
-import {fetchLatestTweets} from 'firebase/client'
+import {listenLatestTweets} from 'firebase/client'
 import Create from 'components/Icons/Create'
 import Link from 'next/link'
 import Home from 'components/Icons/Home'
@@ -13,9 +13,16 @@ export default function HomePage() {
   const [timeline, setTimeline] = useState([])
   const user = useUser()
 
+  // Limpiar las suscripciones activas para que el componente no dé problemas
   useEffect(() => {
-    user && fetchLatestTweets().then(setTimeline)
+    let unsuscribe
+    if (user) {
+      unsuscribe = listenLatestTweets(setTimeline)
+    }
+    return () => unsuscribe && unsuscribe()
   }, [user])
+
+  // Cancelar una llamada fetch: crear una variable para saber si el componente está montado o no
 
   return (
     <>
@@ -42,7 +49,7 @@ export default function HomePage() {
         )}
       </section>
       <nav>
-        <Link href="/compose/tweet">
+        <Link href="/home">
           <a>
             <Home stroke="#09f" />
           </a>

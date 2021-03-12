@@ -1,5 +1,9 @@
 import {useEffect, useState} from 'react'
-
+import Create from 'components/Icons/Create'
+import Link from 'next/link'
+import Home from 'components/Icons/Home'
+import Search from 'components/Icons/Search'
+import {colors} from 'styles/theme'
 import Button from 'components/Button'
 import Avatar from 'components/Avatar'
 
@@ -101,33 +105,52 @@ export default function ComposeTweet() {
       <Head>
         <title>Crear un Tweet / Twitter</title>
       </Head>
-      <section className="form-container">
-        {user && (
-          <section className="avatar-container">
-            <Avatar src={user.avatar} />
-          </section>
-        )}
-
-        <form onSubmit={handleSubmit}>
-          <textarea
-            onChange={handleChange}
-            onDragEnter={handleDragEnter}
-            onDragLeave={handleDragLeave}
-            onDrop={handleDrop}
-            placeholder="¿Qué está pasando?"
-            value={message}
-          ></textarea>
-          {imgURL && (
-            <section className="remove.img">
-              <button onClick={() => setImgURL(null)}>X</button>
-              <img src={imgURL} />
+      <div>
+        <section className="form-container">
+          {user && (
+            <section className="avatar-container">
+              <Avatar src={user.avatar} />
             </section>
           )}
-          <div>
-            <Button disabled={isButtonDisabled}>Twittear</Button>
-          </div>
-        </form>
-      </section>
+
+          <form onSubmit={handleSubmit}>
+            <textarea
+              onChange={handleChange}
+              onDragEnter={handleDragEnter}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+              placeholder="¿Qué está pasando?"
+              value={message}
+            ></textarea>
+            {imgURL && (
+              <section className="remove.img">
+                <button onClick={() => setImgURL(null)}>X</button>
+                <img src={imgURL} />
+              </section>
+            )}
+            <div>
+              <Button disabled={isButtonDisabled}>Twittear</Button>
+            </div>
+          </form>
+        </section>
+      </div>
+      <nav>
+        <Link href="/home">
+          <a>
+            <Home stroke="#09f" />
+          </a>
+        </Link>
+        <Link href="/compose/tweet">
+          <a>
+            <Search stroke="#09f" />
+          </a>
+        </Link>
+        <Link href="/compose/tweet">
+          <a>
+            <Create stroke="#09f" />
+          </a>
+        </Link>
+      </nav>
 
       <style jsx>{`
         div {
@@ -169,6 +192,38 @@ export default function ComposeTweet() {
           border-radius: 10px;
           height: auto;
           width: 100%;
+        }
+
+        nav {
+          background-color: #fff;
+          border-top: 1px solid #eee;
+          bottom: 0;
+          display: flex;
+          height: 49px;
+          position: sticky;
+          width: 100%;
+        }
+
+        nav a {
+          align-items: center;
+          display: flex;
+          flex: 1 1 auto;
+          height: 100%;
+          justify-content: center;
+        }
+
+        nav a:hover {
+          background: radial-gradient(#0099ff22 15%, transparent 16%);
+          background-size: 180px 180px;
+          background-position: center;
+        }
+
+        nav a:hover > :global(svg) {
+          stroke: ${colors.primary};
+        }
+
+        div {
+          flex: 1;
         }
 
         textarea {
